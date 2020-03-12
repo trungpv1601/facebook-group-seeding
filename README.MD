@@ -1,6 +1,6 @@
 # Facebook Group Seeding
 
-> I'm use Puppeteer
+> Made with Puppeteer
 
 ## Install
 
