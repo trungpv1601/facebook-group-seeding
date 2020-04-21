@@ -11,7 +11,7 @@ const init = () => {
 			figlet.textSync('Facebook Tools', {
 				font: 'Standard',
 				horizontalLayout: 'default',
-				verticalLayout: 'default'
+				verticalLayout: 'default',
 			})
 		)
 	);
@@ -23,14 +23,14 @@ const askMode = () => {
 			name: 'MODE',
 			type: 'list',
 			message: 'Please select mode to run :)',
-			choices: [{ name: 'Manual', value: 'Manual' }]
-		}
+			choices: [{ name: 'Manual', value: 'Manual' }],
+		},
 	];
 
 	return inquirer.prompt(question);
 };
 
-const askQuestions = accounts => {
+const askQuestions = (accounts) => {
 	const account = accounts.map((item, i) => {
 		return { name: i + 1 + '. ' + item['email'], value: item };
 	});
@@ -40,17 +40,17 @@ const askQuestions = accounts => {
 			name: 'ACCOUNT',
 			type: 'list',
 			message: 'Account:',
-			choices: account
-		}
+			choices: account,
+		},
 	];
 	return inquirer.prompt(questions);
 };
 
-const askPosts = posts => {
+const askPosts = (posts) => {
 	const post = posts.map((item, i) => {
 		return {
 			name: i + 1 + '. ' + item['post'],
-			value: { post: item['post'], content: item['content'] }
+			value: { post: item['post'], content: item['content'] },
 		};
 	});
 
@@ -59,17 +59,17 @@ const askPosts = posts => {
 			name: 'POST',
 			type: 'list',
 			message: 'Post:',
-			choices: post
-		}
+			choices: post,
+		},
 	];
 	return inquirer.prompt(questions);
 };
 
-const askGroups = groups => {
+const askGroups = (groups) => {
 	const group = groups.map((item, i) => {
 		return {
 			name: i + 1 + '. ' + item['group_name'],
-			value: { group_id: item['group_id'], group_name: item['group_name'] }
+			value: { group_id: item['group_id'], group_name: item['group_name'] },
 		};
 	});
 
@@ -78,8 +78,8 @@ const askGroups = groups => {
 			name: 'GROUP',
 			type: 'list',
 			message: 'Group:',
-			choices: group
-		}
+			choices: group,
+		},
 	];
 	return inquirer.prompt(questions);
 };
@@ -100,10 +100,10 @@ const run = async () => {
 	const answersPosts = await askPosts(posts);
 	// const answersGroups = await askGroups(groups);
 
-	const { email, password, proxy } = answers.ACCOUNT;
+	const { email, password, proxy, secret_2fa } = answers.ACCOUNT;
 
-	const { page, browser } = await FB.init();
-	await FB.signIn(page, email, password);
+	const { page, browser } = await FB.init(proxy);
+	await FB.signIn(page, email, password, secret_2fa);
 
 	await FB.shareToGroups(page, answersPosts.POST, groups);
 
