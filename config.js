@@ -1,7 +1,8 @@
 const DEFAULT_VALUES = {
 	DELAY: 3000,
 	WAITING: 5000,
-	LOAD_MEDIA: false,
+	HIDE_BROWSER: true,
+	LOAD_MEDIA: true,
 	LOGIN: {
 		URL: 'https://www.facebook.com/login/',
 		EMAIL_SELECTOR: 'input[name="email"]',
@@ -20,9 +21,11 @@ const DEFAULT_VALUES = {
 		DIALOG:
 			'div[data-testid="Keycommand_wrapper_ModalLayer"] div[role="dialog"] div[data-vc-ignore-dynamic="1"]:nth-child(4)',
 		DIALOG_1: '//span[contains(text(), "Share to a group")]',
+		POPUP: 'div[aria-label="Share to a group"]',
 		SEARCH_GROUP: 'input[aria-label="Search for groups"]',
 		SHARE_BUTTON: 'div[aria-label="Share"]',
 		DONE: '//span[contains(text(), "Shared")]',
+		GROUP_NOT_FOUND: '//span[contains(text(), "No groups match your search.")]'
 	},
 	CSV_ACCOUNTS_PATH: './accounts.csv',
 	CSV_POSTS_PATH: './posts.csv',

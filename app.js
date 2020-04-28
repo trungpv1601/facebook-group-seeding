@@ -1,17 +1,16 @@
-const inquirer = require('inquirer');
-const chalk = require('chalk');
-const figlet = require('figlet');
-const LOG = require('./lib/logger');
-const CSV = require('./lib/csv');
-const FB = require('./lib/facebook');
+const inquirer = require("inquirer");
+const chalk = require("chalk");
+const figlet = require("figlet");
+const CSV = require("./lib/csv");
+const TASK = require("./lib/task");
 
 const init = () => {
 	console.log(
 		chalk.green(
-			figlet.textSync('Facebook Tools', {
-				font: 'Standard',
-				horizontalLayout: 'default',
-				verticalLayout: 'default',
+			figlet.textSync("Facebook Tools", {
+				font: "Standard",
+				horizontalLayout: "default",
+				verticalLayout: "default",
 			})
 		)
 	);
@@ -20,10 +19,10 @@ const init = () => {
 const askMode = () => {
 	const question = [
 		{
-			name: 'MODE',
-			type: 'list',
-			message: 'Please select mode to run :)',
-			choices: [{ name: 'Manual', value: 'Manual' }],
+			name: "MODE",
+			type: "list",
+			message: "Please select mode to run :)",
+			choices: [{ name: "Manual", value: "Manual" }],
 		},
 	];
 
@@ -32,14 +31,14 @@ const askMode = () => {
 
 const askQuestions = (accounts) => {
 	const account = accounts.map((item, i) => {
-		return { name: i + 1 + '. ' + item['email'], value: item };
+		return { name: i + 1 + ". " + item["email"], value: item };
 	});
 
 	const questions = [
 		{
-			name: 'ACCOUNT',
-			type: 'list',
-			message: 'Account:',
+			name: "ACCOUNT",
+			type: "list",
+			message: "Account:",
 			choices: account,
 		},
 	];
@@ -49,16 +48,16 @@ const askQuestions = (accounts) => {
 const askPosts = (posts) => {
 	const post = posts.map((item, i) => {
 		return {
-			name: i + 1 + '. ' + item['post'],
-			value: { post: item['post'], content: item['content'] },
+			name: i + 1 + ". " + item["post"],
+			value: { post: item["post"], content: item["content"] },
 		};
 	});
 
 	const questions = [
 		{
-			name: 'POST',
-			type: 'list',
-			message: 'Post:',
+			name: "POST",
+			type: "list",
+			message: "Post:",
 			choices: post,
 		},
 	];
@@ -68,16 +67,19 @@ const askPosts = (posts) => {
 const askGroups = (groups) => {
 	const group = groups.map((item, i) => {
 		return {
-			name: i + 1 + '. ' + item['group_name'],
-			value: { group_id: item['group_id'], group_name: item['group_name'] },
+			name: i + 1 + ". " + item["group_name"],
+			value: {
+				group_id: item["group_id"],
+				group_name: item["group_name"],
+			},
 		};
 	});
 
 	const questions = [
 		{
-			name: 'GROUP',
-			type: 'list',
-			message: 'Group:',
+			name: "GROUP",
+			type: "list",
+			message: "Group:",
 			choices: group,
 		},
 	];
@@ -87,30 +89,19 @@ const askGroups = (groups) => {
 const run = async () => {
 	// show script introduction
 	init();
-	// ask question
-	// const answerMode = await askMode();
-	// const { MODE } = answerMode;
-	// if (MODE === 'Manual') {
+
+	// Prepare data
 	const accounts = await CSV.accounts();
 	const groups = await CSV.groups();
 	const posts = await CSV.posts();
 
+	// ask questions
 	const answers = await askQuestions(accounts);
-
 	const answersPosts = await askPosts(posts);
-	// const answersGroups = await askGroups(groups);
 
-	const { email, password, proxy, secret_2fa } = answers.ACCOUNT;
+	await TASK.runShareVideoToGroups(answers.ACCOUNT, answersPosts.POST, groups);
 
-	const { page, browser } = await FB.init(proxy);
-	await FB.signIn(page, email, password, secret_2fa);
-
-	await FB.shareToGroups(page, answersPosts.POST, groups);
-
-	await FB.destroy({ page, browser });
-	// } else {
-	// 	LOG.error('We are not support.');
-	// }
+	process.exit();
 };
 
 run();

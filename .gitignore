@@ -5,3 +5,5 @@ posts.csv
 groups.csv
 node_modules/*
 vendor
+*.log
+screenshots/*.jpg

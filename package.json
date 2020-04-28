@@ -5,7 +5,8 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "node app.js"
+		"start": "node app.js",
+		"clean": "node clean.js"
 	},
 	"keywords": [],
 	"author": "",
@@ -16,7 +17,7 @@
 		"figlet": "^1.3.0",
 		"inquirer": "^7.1.0",
 		"pino": "^5.17.0",
-		"pino-pretty": "^3.6.1",
+		"pino-tee": "^0.3.0",
 		"puppeteer": "^2.1.1",
 		"unirest": "^0.6.0"
 	}
