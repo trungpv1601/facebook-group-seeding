@@ -22,7 +22,10 @@ const askMode = () => {
 			name: "MODE",
 			type: "list",
 			message: "Please select mode to run :)",
-			choices: [{ name: "Manual", value: "Manual" }],
+			choices: [
+				{ name: "Auto", value: "Auto" },
+				{ name: "Manual", value: "Manual" },
+			],
 		},
 	];
 
@@ -96,10 +99,30 @@ const run = async () => {
 	const posts = await CSV.posts();
 
 	// ask questions
-	const answers = await askQuestions(accounts);
-	const answersPosts = await askPosts(posts);
+	const mode = await askMode();
+	
+	if (mode.MODE === "Auto") {
+		for (let i = accounts.length - 1; i >= 0; i--) {
+			let account = accounts[i];
+			for (let j = posts.length - 1; j >= 0; j--) {
+				let post = posts[j];
+				await TASK.runShareVideoToGroups(
+					account,
+					post,
+					groups
+				);
+			}
+		}
+	} else {
+		const answers = await askQuestions(accounts);
+		const answersPosts = await askPosts(posts);
 
-	await TASK.runShareVideoToGroups(answers.ACCOUNT, answersPosts.POST, groups);
+		await TASK.runShareVideoToGroups(
+			answers.ACCOUNT,
+			answersPosts.POST,
+			groups
+		);
+	}
 
 	process.exit();
 };
