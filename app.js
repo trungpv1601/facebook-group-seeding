@@ -100,17 +100,13 @@ const run = async () => {
 
 	// ask questions
 	const mode = await askMode();
-	
+
 	if (mode.MODE === "Auto") {
 		for (let i = accounts.length - 1; i >= 0; i--) {
 			let account = accounts[i];
 			for (let j = posts.length - 1; j >= 0; j--) {
 				let post = posts[j];
-				await TASK.runShareVideoToGroups(
-					account,
-					post,
-					groups
-				);
+				await TASK.runShareVideoToGroups(account, post, groups);
 			}
 		}
 	} else {

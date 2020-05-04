@@ -7,3 +7,4 @@ node_modules/*
 vendor
 *.log
 screenshots/*.jpg
+cookies/*.json
