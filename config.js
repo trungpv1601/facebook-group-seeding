@@ -1,7 +1,7 @@
 const DEFAULT_VALUES = {
 	DELAY: 3000,
 	WAITING: 5000,
-	HIDE_BROWSER: false,
+	HIDE_BROWSER: true,
 	LOAD_MEDIA: true,
 	LOGIN: {
 		URL: "https://www.facebook.com/login/",
