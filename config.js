@@ -29,9 +29,21 @@ const DEFAULT_VALUES = {
 		GROUP_NOT_FOUND:
 			'//span[contains(text(), "No groups match your search.")]',
 	},
+	SHARE_VIDEO_GROUP_OLD: {
+		SELECTOR:
+			'a[title="Send this to friends or post it on your timeline."]',
+		WAITING_DIALOG: 'ul[role="menu"]',
+		DIALOG: '//span[contains(text(), "Share in a Group")]',
+		POPUP: 'div[aria-label="Reshare"]',
+		SEARCH_GROUP: 'input[placeholder="Group Name"]',
+		CONTENT: 'div[aria-label="Say something about this..."]',
+		SHARE_BUTTON: 'div[aria-label="Reshare"] button.selected[type="submit"]',
+		DONE: '//span[contains(text(), "Shared")]',
+		GROUP_NOT_FOUND:
+			'//span[contains(text(), "No groups match your search.")]',
+	},
 	CSV_ACCOUNTS_PATH: "./accounts.csv",
 	CSV_POSTS_PATH: "./posts.csv",
-	CSV_GROUPS_PATH: "./groups.csv",
 	API_2FA: "https://2ffhsk1114.execute-api.us-east-1.amazonaws.com/dev/",
 };
 
