@@ -1,2 +1,2 @@
-email,password,proxy
-fb_account@gmail.com,secret,false
+id,email,password,proxy,secret_2fa
+T1,fb_account@gmail.com,secret,127.0.0.1:9000:username:password,secret

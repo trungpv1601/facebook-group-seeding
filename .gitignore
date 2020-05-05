@@ -1,8 +1,6 @@
 node_modules/
 package-lock.json
-accounts.csv
-posts.csv
-groups.csv
+*.csv
 node_modules/*
 vendor
 *.log

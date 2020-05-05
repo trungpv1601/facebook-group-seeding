@@ -32,27 +32,11 @@ const askMode = () => {
 	return inquirer.prompt(question);
 };
 
-const askQuestions = (accounts) => {
-	const account = accounts.map((item, i) => {
-		return { name: i + 1 + ". " + item["email"], value: item };
-	});
-
-	const questions = [
-		{
-			name: "ACCOUNT",
-			type: "list",
-			message: "Account:",
-			choices: account,
-		},
-	];
-	return inquirer.prompt(questions);
-};
-
 const askPosts = (posts) => {
 	const post = posts.map((item, i) => {
 		return {
-			name: i + 1 + ". " + item["post"],
-			value: { post: item["post"], content: item["content"] },
+			name: `${i + 1}. ${item["post_share"]} (${item["content_share"]})`,
+			value: item,
 		};
 	});
 
@@ -67,57 +51,30 @@ const askPosts = (posts) => {
 	return inquirer.prompt(questions);
 };
 
-const askGroups = (groups) => {
-	const group = groups.map((item, i) => {
-		return {
-			name: i + 1 + ". " + item["group_name"],
-			value: {
-				group_id: item["group_id"],
-				group_name: item["group_name"],
-			},
-		};
-	});
-
-	const questions = [
-		{
-			name: "GROUP",
-			type: "list",
-			message: "Group:",
-			choices: group,
-		},
-	];
-	return inquirer.prompt(questions);
-};
-
 const run = async () => {
 	// show script introduction
 	init();
 
 	// Prepare data
 	const accounts = await CSV.accounts();
-	const groups = await CSV.groups();
 	const posts = await CSV.posts();
 
 	// ask questions
 	const mode = await askMode();
 
 	if (mode.MODE === "Auto") {
-		for (let i = accounts.length - 1; i >= 0; i--) {
-			let account = accounts[i];
-			for (let j = posts.length - 1; j >= 0; j--) {
-				let post = posts[j];
-				await TASK.runShareVideoToGroups(account, post, groups);
-			}
+		for (let j = posts.length - 1; j >= 0; j--) {
+			let post = posts[j];
+			let account_id = post["account_id"];
+			let account = CSV.whereAccount(account_id, accounts);
+			await TASK.runShareVideoToGroups(account, post);
 		}
 	} else {
-		const answers = await askQuestions(accounts);
 		const answersPosts = await askPosts(posts);
-
-		await TASK.runShareVideoToGroups(
-			answers.ACCOUNT,
-			answersPosts.POST,
-			groups
-		);
+		let post = answersPosts.POST;
+		let account_id = post["account_id"];
+		let account = CSV.whereAccount(account_id, accounts);
+		await TASK.runShareVideoToGroups(account, post);
 	}
 
 	process.exit();

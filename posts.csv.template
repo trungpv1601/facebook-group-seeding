@@ -1,2 +1,5 @@
-post,content
-https://www.facebook.com/watch/?v=496381307938104,"Hi there, I will share you something special here ;)"
+account_id,group_id,group_name,post_share,content_share
+T1,https://www.facebook.com/groups/511115459810291/,Test Group 1,https://www.facebook.com/watch/?v=541205256540790,Hi 1 - Account T1
+T1,https://www.facebook.com/groups/541620929806357/,Test Group 2,https://www.facebook.com/watch/?v=246547496487862,Hi 2 - Account T1
+T2,https://www.facebook.com/groups/511115459810291/,Test Group 1,https://www.facebook.com/watch/?v=2295918754046609,Hi 3 - Account T2
+T2,https://www.facebook.com/groups/541620929806357/,Test Group 2,https://www.facebook.com/watch/?v=3491724037509318,Hi 4 - Account T2
