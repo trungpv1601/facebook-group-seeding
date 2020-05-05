@@ -63,8 +63,8 @@ const run = async () => {
 	const mode = await askMode();
 
 	if (mode.MODE === "Auto") {
-		for (let j = posts.length - 1; j >= 0; j--) {
-			let post = posts[j];
+		for (var i = 0; i < posts.length; i++) {
+			let post = posts[i];
 			let account_id = post["account_id"];
 			let account = CSV.whereAccount(account_id, accounts);
 			await TASK.runShareVideoToGroups(account, post);
