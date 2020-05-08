@@ -1,7 +1,7 @@
 const DEFAULT_VALUES = {
 	DELAY: 3000,
 	WAITING: 5000,
-	HIDE_BROWSER: true,
+	HIDE_BROWSER: false,
 	LOAD_MEDIA: true,
 	LOGIN: {
 		URL: "https://www.facebook.com/login/",
@@ -18,11 +18,11 @@ const DEFAULT_VALUES = {
 	},
 	SHARE_VIDEO_GROUP: {
 		SELECTOR:
-			'div[aria-label="Send this to friends or post it on your Timeline."]',
+			'div[aria-label="Send this to friends or post it on your Timeline."], div[aria-label="Send this to friends or post it on your timeline."]',
 		DIALOG:
 			'div[data-testid="Keycommand_wrapper_ModalLayer"] div[role="dialog"] div[data-vc-ignore-dynamic="1"]:nth-child(4)',
-		DIALOG_1: '//span[contains(text(), "Share to a group")]',
-		POPUP: 'div[aria-label="Share to a group"]',
+		DIALOG_1: '//span[contains(text(), "Share to a group")] | //span[contains(text(), "Share to a Group")]',
+		POPUP: 'div[aria-label="Share to a group"], div[aria-label="Share to a Group"]',
 		SEARCH_GROUP: 'input[aria-label="Search for groups"]',
 		SHARE_BUTTON: 'div[aria-label="Share"]',
 		DONE: '//span[contains(text(), "Shared")]',
