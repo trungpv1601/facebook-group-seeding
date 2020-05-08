@@ -20,7 +20,7 @@ const DEFAULT_VALUES = {
 		SELECTOR:
 			'div[aria-label="Send this to friends or post it on your Timeline."], div[aria-label="Send this to friends or post it on your timeline."]',
 		DIALOG:
-			'div[data-testid="Keycommand_wrapper_ModalLayer"] div[role="dialog"] div[data-vc-ignore-dynamic="1"]:nth-child(4)',
+			'//span[contains(text(), "More options")] | //span[contains(text(), "More Options")]',
 		DIALOG_1: '//span[contains(text(), "Share to a group")] | //span[contains(text(), "Share to a Group")]',
 		POPUP: 'div[aria-label="Share to a group"], div[aria-label="Share to a Group"]',
 		SEARCH_GROUP: 'input[aria-label="Search for groups"]',
