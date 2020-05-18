@@ -3,6 +3,7 @@ const chalk = require("chalk");
 const figlet = require("figlet");
 const CSV = require("./lib/csv");
 const TASK = require("./lib/task");
+const LOG = require("./lib/logger");
 
 const init = () => {
 	console.log(
@@ -64,10 +65,14 @@ const run = async () => {
 
 	if (mode.MODE === "Auto") {
 		for (var i = 0; i < posts.length; i++) {
-			let post = posts[i];
-			let account_id = post["account_id"];
-			let account = CSV.whereAccount(account_id, accounts);
-			await TASK.runShareVideoToGroups(account, post);
+			try {
+				let post = posts[i];
+				let account_id = post["account_id"];
+				let account = CSV.whereAccount(account_id, accounts);
+				await TASK.runShareVideoToGroups(account, post);
+			} catch (e) {
+				LOG.error(e);
+			}
 		}
 	} else {
 		const answersPosts = await askPosts(posts);
